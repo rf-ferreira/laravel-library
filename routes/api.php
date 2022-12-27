@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Book\BookController;
+use App\Http\Controllers\API\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,4 +26,9 @@ Route::middleware('guest')->name('api.auth.')->group(function () {
 Route::middleware('auth')->prefix('/book')->name('api.book.')->group(function () {
     Route::post('/store', [BookController::class, 'store'])->name('store');
     Route::put('/{book}/update', [BookController::class, 'update'])->name('update');
+});
+
+// User
+Route::middleware('guest')->prefix('/user')->name('api.user.')->group(function () {
+    Route::get('{user}/profile', [UserController::class, 'profile'])->name('profile');
 });
