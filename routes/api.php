@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\Auth\AuthController;
+use App\Http\Controllers\API\Book\BookController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +19,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('guest')->name('api.auth.')->group(function () {
     Route::post('/register', [AuthController::class, 'register'])->name('register');
     Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('authenticate');
+});
+
+// Book
+Route::middleware('auth')->prefix('/book')->name('api.book.')->group(function () {
+    Route::post('/store', [BookController::class, 'store'])->name('store');
+    Route::put('/{book}/update', [BookController::class, 'update'])->name('update');
 });
