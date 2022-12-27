@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\Book;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -19,22 +20,9 @@ class UserController extends Controller
             return response()->json($response, 404);
         }
 
-        $booksOwned = [];
-        foreach ($user->books()->get() as $book) {
-            $booksOwned[] = [
-                "id" => $book->id,
-                "title" => $book->title,
-                "author" => $book->author,
-                "image" => $book->image,
-                "publish_date" => $book->publish_date,
-                "type" => $book->type,
-                "description" => $book->description,
-                "editor" => $book->editor,
-                "language" => $book->language,
-                "copys" => $book->copys,
-            ];
-        }
-        
+        $booksOwned = $user->books()->get()->map(fn (Book $book) => $book)->toArray();
+        $booksRented = $user->booksRented()->get()->map(fn (Book $book) => $book)->toArray();
+
         $response = [
             'status' => 200,
             'message' => 'success',
@@ -43,7 +31,7 @@ class UserController extends Controller
                 'name' => $user->name,
                 'books' => [
                     'owned' => $booksOwned,
-                    'rented' => []
+                    'rented' => $booksRented
                 ],
             ]
         ];

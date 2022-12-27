@@ -15,22 +15,11 @@ class UserControllerTest extends TestCase
     public function test_can_get_user_profile()
     {
         $user = User::factory()->has(Book::factory(3))->create();
+        $book = $user->books()->first();
+        $user->booksRented()->attach($book);
 
-        $booksOwned = [];
-        foreach ($user->books()->get() as $book) {
-            $booksOwned[] = [
-                "id" => $book->id,
-                "title" => $book->title,
-                "author" => $book->author,
-                "image" => $book->image,
-                "publish_date" => $book->publish_date,
-                "type" => $book->type,
-                "description" => $book->description,
-                "editor" => $book->editor,
-                "language" => $book->language,
-                "copys" => $book->copys,
-            ];
-        }
+        $booksOwned = $user->books()->get()->map(fn (Book $book) => $book)->toArray();
+        $booksRented = $user->booksRented()->get()->map(fn (Book $book) => $book)->toArray();
 
         $json = [
             'status' => 200,
@@ -40,7 +29,7 @@ class UserControllerTest extends TestCase
                 'name' => $user->name,
                 'books' => [
                     'owned' => $booksOwned,
-                    'rented' => []
+                    'rented' => $booksRented
                 ]
             ]
         ];
