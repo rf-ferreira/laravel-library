@@ -42,4 +42,20 @@ class BookControllerTest extends TestCase
         $response->assertOk();
         $response->assertSee('success');
     }
+
+    public function test_user_can_rent_a_book()
+    {
+        $user = User::factory()->has(Book::factory())->create();
+        $book = $user->books()->first();
+
+        $this->actingAs($user);
+        $response = $this->post(route('api.book.rent', $book->id));
+
+        $this->assertDatabaseHas('books_rented', [
+            'book_id' => $book->id,
+            'renter_id' => $user->id
+        ]);
+        $response->assertOk();
+        $response->assertSee('success');
+    }
 }

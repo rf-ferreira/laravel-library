@@ -26,6 +26,7 @@ Route::middleware('guest')->name('api.auth.')->group(function () {
 Route::middleware('auth')->prefix('/book')->name('api.book.')->group(function () {
     Route::post('/store', [BookController::class, 'store'])->name('store');
     Route::put('/{book}/update', [BookController::class, 'update'])->name('update');
+    Route::post('/{book}/rent', [BookController::class, 'rent'])->name('rent');
 });
 
 // User

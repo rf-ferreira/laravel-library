@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Book::class, 'owner_id');
     }
+
+    public function booksRented()
+    {
+        return $this->belongsToMany(Book::class, 'books_rented', 'renter_id');
+    }
 }

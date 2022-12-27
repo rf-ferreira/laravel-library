@@ -70,4 +70,24 @@ class BookController extends Controller
         ];
         return response()->json($response);
     }
+
+    public function rent(Book $book)
+    {
+        if (!$book) {
+            $response = [
+                'status' => 404,
+                'message' => 'not found',
+            ];
+
+            return response()->json($response, 404);
+        }
+
+        auth()->user()->booksRented()->attach($book);
+        
+        $response = [
+            'status' => 200,
+            'message' => 'success'
+        ];
+        return response()->json($response);
+    }
 }
