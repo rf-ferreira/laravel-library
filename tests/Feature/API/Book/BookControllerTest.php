@@ -58,4 +58,19 @@ class BookControllerTest extends TestCase
         $response->assertOk();
         $response->assertSee('success');
     }
+
+    public function test_user_can_return_a_book()
+    {
+        $this->withoutExceptionHandling();
+        $user = User::factory()->has(Book::factory())->create();
+        $book = $user->books()->first();
+        $user->booksRented()->attach($book);
+
+        $this->actingAs($user);
+        $response = $this->post(route('api.book.return', $book->id));
+
+        $this->assertDatabaseEmpty('books_rented');
+        $response->assertOk();
+        $response->assertSee('returned');
+    }
 }

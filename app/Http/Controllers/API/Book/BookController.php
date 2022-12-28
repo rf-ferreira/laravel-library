@@ -67,7 +67,7 @@ class BookController extends Controller
             'status' => 200,
             'message' => 'success'
         ];
-        return response()->json($response);
+        return response()->json($response, 200);
     }
 
     public function rent(Book $book)
@@ -87,6 +87,26 @@ class BookController extends Controller
             'status' => 200,
             'message' => 'success'
         ];
-        return response()->json($response);
+        return response()->json($response, 200);
+    }
+
+    public function return(Book $book)
+    {
+        if (!$book || !auth()->user()->booksRented()->find($book)) {
+            $response = [
+                'status' => 404,
+                'message' => 'not found',
+            ];
+
+            return response()->json($response, 404);
+        }
+
+        auth()->user()->booksRented()->detach($book);
+        
+        $response = [
+            'status' => 200,
+            'message' => 'book returned',
+        ];
+        return response()->json($response, 200);
     }
 }

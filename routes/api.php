@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->prefix('/book')->name('api.book.')->group(fun
     Route::post('/store', [BookController::class, 'store'])->name('store');
     Route::put('/{book}/update', [BookController::class, 'update'])->name('update');
     Route::post('/{book}/rent', [BookController::class, 'rent'])->name('rent');
+    Route::post('/{book}/return', [BookController::class, 'return'])->name('return');
 });
 
 // User
