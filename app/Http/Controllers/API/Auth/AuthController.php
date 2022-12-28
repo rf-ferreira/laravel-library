@@ -44,9 +44,13 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($credentials)) {
+            $token = auth()->user()->createToken('access_token')->plainTextToken;
+
             $response = [
                 'status' => 200,
                 'message' => 'success',
+                'access_token' => explode('|', $token)[1],
+                'token_type' => 'Bearer',
             ];
             return response()->json($response, 200);
         }

@@ -18,7 +18,6 @@ class Book extends Model
         'description',
         'editor',
         'language',
-        'owner_id',
         'copys',
     ];
 

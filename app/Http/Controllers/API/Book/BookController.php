@@ -20,11 +20,10 @@ class BookController extends Controller
             'description'=> 'required|string',
             'editor' => 'required|string',
             'language' => 'required|string',
-            'owner_id' => 'required|integer',
             'copys' => 'required|integer',
         ]);
 
-        if (Book::create($validated)) {
+        if (auth()->user()->books()->create($validated)) {
             $response = [
                 'status' => 200,
                 'message' => 'success'
