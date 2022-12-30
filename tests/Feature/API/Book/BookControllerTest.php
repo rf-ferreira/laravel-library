@@ -105,4 +105,22 @@ class BookControllerTest extends TestCase
         $response->assertOk();
         $response->assertExactJson($json);
     }
+
+    public function test_user_can_get_book_index_page()
+    {
+        Book::factory(10)->for(User::factory())->create();
+        $books = Book::orderBy('created_at', 'desc')->limit(4)->get();
+
+        $json = [
+            'status' => 200,
+            'message' => 'success',
+            'books' => $books->toArray()
+        ];
+
+        $response = $this->get(route('api.book.index'));
+
+        $this->assertEquals(10, Book::count());
+        $response->assertOk();
+        $response->assertExactJson($json);
+    }
 }
