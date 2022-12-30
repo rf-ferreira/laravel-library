@@ -23,6 +23,7 @@ Route::middleware('guest')->name('api.auth.')->group(function () {
 });
 
 // Book
+Route::get('/book/{book}', [BookController::class, 'show'])->name('api.book.show');
 Route::middleware('auth:sanctum')->prefix('/book')->name('api.book.')->group(function () {
     Route::post('/store', [BookController::class, 'store'])->name('store');
     Route::put('/{book}/update', [BookController::class, 'update'])->name('update');

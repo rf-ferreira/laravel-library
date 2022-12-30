@@ -109,4 +109,24 @@ class BookController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+    public function show(Book $book)
+    {
+        if (!$book) {
+            $response = [
+                'status' => 404,
+                'message' => 'not found',
+            ];
+
+            return response()->json($response, 404);
+        }
+
+        $response = [
+            'status' => 200,
+            'message' => 'success',
+            'book' => $book->toArray()
+        ];
+
+        return response()->json($response, 200);
+    }
 }
