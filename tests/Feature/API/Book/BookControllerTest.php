@@ -88,4 +88,21 @@ class BookControllerTest extends TestCase
         $response->assertOk();
         $response->assertExactJson($json);
     }
+
+    public function test_user_can_get_all_books()
+    {
+        Book::factory(3)->for(User::factory())->create();
+        $books = Book::get();
+
+        $json = [
+            'status' => 200,
+            'message' => 'success',
+            'books' => $books->toArray()
+        ];
+
+        $response = $this->get(route('api.book.books'));
+
+        $response->assertOk();
+        $response->assertExactJson($json);
+    }
 }

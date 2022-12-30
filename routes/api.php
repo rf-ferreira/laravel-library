@@ -24,6 +24,8 @@ Route::middleware('guest')->name('api.auth.')->group(function () {
 
 // Book
 Route::name('api.book.')->group(function () {
+    Route::get('/books', [BookController::class, 'books'])->name('books');
+
     Route::prefix('/book')->group(function () {
         Route::middleware('guest')->group(function () {
             Route::get('/book/{book}', [BookController::class, 'show'])->name('show');
