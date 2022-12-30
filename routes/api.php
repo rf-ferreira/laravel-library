@@ -23,12 +23,19 @@ Route::middleware('guest')->name('api.auth.')->group(function () {
 });
 
 // Book
-Route::get('/book/{book}', [BookController::class, 'show'])->name('api.book.show');
-Route::middleware('auth:sanctum')->prefix('/book')->name('api.book.')->group(function () {
-    Route::post('/store', [BookController::class, 'store'])->name('store');
-    Route::put('/{book}/update', [BookController::class, 'update'])->name('update');
-    Route::post('/{book}/rent', [BookController::class, 'rent'])->name('rent');
-    Route::post('/{book}/return', [BookController::class, 'return'])->name('return');
+Route::name('api.book.')->group(function () {
+    Route::prefix('/book')->group(function () {
+        Route::middleware('guest')->group(function () {
+            Route::get('/book/{book}', [BookController::class, 'show'])->name('api.book.show');
+        });
+
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/store', [BookController::class, 'store'])->name('store');
+            Route::put('/{book}/update', [BookController::class, 'update'])->name('update');
+            Route::post('/{book}/rent', [BookController::class, 'rent'])->name('rent');
+            Route::post('/{book}/return', [BookController::class, 'return'])->name('return');
+        });
+    });
 });
 
 // User
