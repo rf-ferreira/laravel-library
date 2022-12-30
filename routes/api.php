@@ -26,7 +26,7 @@ Route::middleware('guest')->name('api.auth.')->group(function () {
 Route::name('api.book.')->group(function () {
     Route::prefix('/book')->group(function () {
         Route::middleware('guest')->group(function () {
-            Route::get('/book/{book}', [BookController::class, 'show'])->name('api.book.show');
+            Route::get('/book/{book}', [BookController::class, 'show'])->name('show');
         });
 
         Route::middleware('auth:sanctum')->group(function () {
