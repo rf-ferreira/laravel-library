@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Inria+Serif:wght@400;700&display=swap');
+
+body {
+    background: url('../images/layout/background.png');
+    background-repeat: no-repeat;
+    background-size: 100vw 100vh;
+    font-family: 'Inria Serif';
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    height: 67px;
+    background-color: #262529;
+}
+
+.nav-links {
+    width: 256px;
+    font-size: 22px;
+    margin: 0 auto;
+    height: inherit;
+    display: flex;
+    align-items: center;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    border-radius: 25px;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.nav-links a:nth-child(2) {
+    margin: 0 15px;
+}
+
+.nav-selected {
+    background-color: #906244;
+    padding: 11px 15px;
+}
+
+.nav-selected:hover {
+    background-color: #835a3f;
+}
